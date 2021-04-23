@@ -1,0 +1,69 @@
+---
+
+- name: openwisp-wifi-login-pages.git
+  git:
+    repo: https://github.com/openwisp/openwisp-wifi-login-pages.git
+    dest: "{{ wifi_login_pages_path }}"
+  tags: git
+
+- name: yarn install
+  community.general.yarn:
+    path: "{{ wifi_login_pages_path }}"
+
+- name: create log directory
+  file:
+    dest: "{{ wifi_login_pages_path }}/log"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    state: directory
+
+- name: create yarn cache directory
+  file:
+    dest: "/var/www/.cache/yarn"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    state: directory
+
+- name: set permissions to main dir
+  file:
+    dest: "{{ wifi_login_pages_path }}"
+    group: "{{ www_group }}"
+    mode: 0770
+
+- name: set permissions to dist
+  file:
+    dest: "{{ wifi_login_pages_path }}/dist"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    # sets executable only to directories
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+
+- name: set permissions to node_modules
+  file:
+    dest: "{{ wifi_login_pages_path }}/node_modules"
+    group: "{{ www_group }}"
+    # sets executable only to directories
+    mode: g=rXw,o=rX
+    recurse: true
+
+- name: yarn build
+  become: true
+  become_user: www-data
+  command: "yarn build"
+  args:
+    chdir: "{{ wifi_login_pages_path }}"
+
+- name: set permissions to server config
+  file:
+    dest: "{{ wifi_login_pages_path }}/server/config.json"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: 0660
+
+- name: set permissions to client config
+  file:
+    dest: "{{ wifi_login_pages_path }}/client/config.json"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: 0660

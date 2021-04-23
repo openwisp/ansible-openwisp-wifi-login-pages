@@ -1,0 +1,27 @@
+---
+
+- name: Add nodejs apt key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Add nodejs 15.x ppa for apt repo
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_15.x {{ ansible_distribution_release.lower() }} main"
+
+- name: Add yarn apt key
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    state: present
+
+- name: Add yarn ppa for apt repo
+  apt_repository:
+    repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+
+- name: Install nodejs and yarn
+  apt:
+    cache_valid_time: 3000
+    name:
+      - nodejs
+      - yarn
+    state: present

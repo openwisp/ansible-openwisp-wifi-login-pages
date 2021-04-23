@@ -1,0 +1,11 @@
+[program:wifi_login_pages]
+user={{ www_user }}
+directory={{ wifi_login_pages_path }}
+command=/bin/bash -c "yarn setup && node server/start.js"
+autostart=true
+autorestart=true
+stopsignal=INT
+redirect_stderr=true
+stdout_logfile={{ wifi_login_pages_path }}/log/server.log
+stdout_logfile_maxbytes=30MB
+stdout_logfile_backups=5

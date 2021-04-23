@@ -1,0 +1,14 @@
+---
+
+- name: nginx configuration
+  template:
+    src: nginx.j2
+    dest: "/etc/nginx/sites-available/wifi_login_pages"
+  notify: restart nginx
+
+- name: enable nginx site
+  file:
+    src: "/etc/nginx/sites-available/wifi_login_pages"
+    dest: "/etc/nginx/sites-enabled/wifi_login_pages"
+    state: link
+  notify: restart nginx

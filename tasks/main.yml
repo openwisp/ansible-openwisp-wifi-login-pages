@@ -1,0 +1,13 @@
+---
+
+- import_tasks: apt.yml
+  tags: [wifi-login-pages, apt]
+
+- import_tasks: yarn.yml
+  tags: [wifi-login-pages, yarn]
+
+- import_tasks: supervisor.yml
+  tags: [wifi-login-pages, supervisor]
+
+- import_tasks: nginx.yml
+  tags: [wifi-login-pages, nginx]

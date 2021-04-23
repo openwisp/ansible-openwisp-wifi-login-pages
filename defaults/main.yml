@@ -1,0 +1,8 @@
+---
+
+openwisp2_path: "/opt/openwisp2"
+wifi_login_pages_domains: []
+wifi_login_pages_path: "{{ openwisp2_path }}/wifi-login-pages"
+wifi_login_pages_ssl_cert: "{{ openwisp2_path }}/ssl/server.crt"
+wifi_login_pages_ssl_key: "{{ openwisp2_path }}/ssl/server.key"
+supervisor_path: "/etc/supervisor/conf.d/%s.conf"

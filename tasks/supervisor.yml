@@ -1,0 +1,7 @@
+---
+
+- name: supervisor configuration
+  template:
+    src: supervisor.j2
+    dest: "{{ supervisor_path | format('wifi_login_pages') }}"
+  notify: reload supervisor
