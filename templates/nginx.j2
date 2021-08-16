@@ -1,6 +1,6 @@
 server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
     server_name {{ " ".join(wifi_login_pages_domains) }};
 
     root {{ wifi_login_pages_path }}/dist;
@@ -23,6 +23,7 @@ server {
     add_header X-Content-Type-Options nosniff;
 
     gzip on;
+    gzip_static on;
     gzip_comp_level 6;
     gzip_proxied any;
     gzip_min_length 1000;

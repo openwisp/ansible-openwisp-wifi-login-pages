@@ -4,4 +4,4 @@ Ansible role to deploy and manage [openwisp-wifi-login-pages](https://github.com
 
 Required variables:
 
-``wifi_login_pages_domains``: a list with the hostname where the app will be reachable
+- ``wifi_login_pages_domains``: a list with the hostname where the app will be reachable.
