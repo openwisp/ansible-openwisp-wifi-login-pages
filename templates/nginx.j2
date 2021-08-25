@@ -39,6 +39,10 @@ server {
     location / {
         try_files {{ wifi_login_pages_path }}/dist/maintenance.html $uri @nodejs;
     }
+
+    location /static/ {
+        alias {{ wifi_login_pages_path }}/static/;
+    }
 }
 
 server {
@@ -46,7 +50,7 @@ server {
     listen [::]:80;
     server_name {{ " ".join(wifi_login_pages_domains) }};
 
-    root {{ openwisp2_path }}/public_html;
+    root {{ openwisp2_path }}/dist;
 
     # Necessary for Let's Encrypt Domain Name ownership validation
     location /.well-known/ {
@@ -54,7 +58,7 @@ server {
     }
 
     location / {
-        try_files {{ openwisp2_path }}/public_html/maintenance.html $uri $uri/index.html @redirect;
+        try_files {{ openwisp2_path }}/dist/maintenance.html $uri @redirect;
     }
 
     # redirect all requests to https

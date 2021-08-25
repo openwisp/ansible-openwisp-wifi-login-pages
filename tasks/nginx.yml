@@ -1,5 +1,12 @@
 ---
 
+- name: create static directory
+  file:
+    dest: "{{ wifi_login_pages_path }}/static"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    state: directory
+
 - name: nginx configuration
   template:
     src: nginx.j2
