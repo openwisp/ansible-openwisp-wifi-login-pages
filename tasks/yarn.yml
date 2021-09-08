@@ -73,7 +73,6 @@
 
 - name: yarn build
   become: true
-  become_user: www-data
   command: "yarn build"
   args:
     chdir: "{{ wifi_login_pages_path }}"

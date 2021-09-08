@@ -7,6 +7,26 @@
     owner: "{{ www_user }}"
     state: directory
 
+- name: create "{{ openwisp2_path }}/ssl"
+  file:
+    path: "{{ openwisp2_path }}/ssl"
+    state: directory
+    mode: 0770
+
+- name: create SSL cert if not exists yet
+  command: >
+    openssl req -new -nodes -x509 \
+    -subj "/C={{ openwisp2_ssl_country }}/ST={{ openwisp2_ssl_state }} \
+           /L={{ openwisp2_ssl_locality }}/O={{ openwisp2_ssl_organization }} \
+           /CN={{ openwisp2_ssl_common_name }}" \
+    -days 3650 \
+    -keyout {{ wifi_login_pages_ssl_key }} \
+    -out {{ wifi_login_pages_ssl_cert }} \
+    -extensions v3_ca creates={{ wifi_login_pages_ssl_cert }}
+  args:
+    warn: false
+  notify: restart nginx
+
 - name: nginx configuration
   template:
     src: nginx.j2
