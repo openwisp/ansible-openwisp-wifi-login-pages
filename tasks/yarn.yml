@@ -4,6 +4,7 @@
   git:
     repo: https://github.com/openwisp/openwisp-wifi-login-pages.git
     dest: "{{ wifi_login_pages_path }}"
+    force: true
   tags: git
 
 - name: yarn install
@@ -47,6 +48,29 @@
     mode: g=rXw,o=rX
     recurse: true
 
+- name: set permissions to client
+  file:
+    dest: "{{ wifi_login_pages_path }}/client"
+    group: "{{ www_group }}"
+    # sets executable only to directories
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+
+- name: set permissions to server
+  file:
+    dest: "{{ wifi_login_pages_path }}/server"
+    group: "{{ www_group }}"
+    # sets executable only to directories
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+
+- name: copy organizations
+  become: true
+  copy:
+    src: organizations
+    dest: "{{ wifi_login_pages_path }}"
+    mode: 0644
+
 - name: yarn build
   become: true
   become_user: www-data
@@ -54,16 +78,18 @@
   args:
     chdir: "{{ wifi_login_pages_path }}"
 
-- name: set permissions to server config
+- name: change permissions of client
   file:
-    dest: "{{ wifi_login_pages_path }}/server/config.json"
+    dest: "{{ wifi_login_pages_path }}/client"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
     mode: 0660
+    recurse: true
 
-- name: set permissions to client config
+- name: change permissions of server
   file:
-    dest: "{{ wifi_login_pages_path }}/client/config.json"
+    dest: "{{ wifi_login_pages_path }}/server"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
     mode: 0660
+    recurse: true

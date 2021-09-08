@@ -1,0 +1,22 @@
+---
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Checking file is uploaded
+      stat:
+        path: "/opt/openwisp2/wifi-login-pages/organizations/default/testfile"
+      register: uploaded_file
+
+    - name: File exists
+      debug:
+        msg: "The file is uploaded"
+      when: uploaded_file.stat.exists
+
+    - name: File do not exists
+      fail:
+        msg: "The file is not uploaded."
+      when: not uploaded_file.stat.exists
