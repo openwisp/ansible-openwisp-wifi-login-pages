@@ -1,6 +1,6 @@
 ---
 
-name: Ansible OpenWISP2 CI Build
+name: Ansible OpenWISP WiFi Login Pages CI Build
 
 on:             # yamllint disable-line rule:truthy
   push:
@@ -19,9 +19,8 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - ubuntu1804
           - ubuntu2004
-          - debian10
+          - debian11
 
     steps:
       - uses: actions/checkout@v2
