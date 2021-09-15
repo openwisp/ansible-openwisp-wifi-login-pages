@@ -13,7 +13,8 @@ to `{{ wifi_login_pages_path }}/static/`.
 
 ## Deploy organizations configurations and assets
 
-For deploying organization YAML config files and their related static assets (logo, CSS, etc), proceed with the following tests:
+For deploying organization YAML config files and their related static assets (logo, CSS, etc), proceed
+with the following steps:
 
 **Step 1**: Change directory to ansible playbook file.
 
@@ -27,7 +28,8 @@ cd <path_to_playbook_file >
 mkdir files
 ```
 
-**Step 3**: Copy `organizations` directory with all the organizations configuration and assets inside the created `files` directory.
+**Step 3**: Copy all the organizations configuration and assets inside `organizations` directory to the
+`files` directory so that the resulting directory structure should be `files/organizations`.
 
 ```
 cp -r <path_to_organizations_directory> files
