@@ -64,11 +64,13 @@
     mode: u=rwX,g=rX,o=rX
     recurse: true
 
-- name: copy organizations
+- name: copy organizations configs and assets
   become: true
   copy:
-    src: organizations
-    dest: "{{ wifi_login_pages_path }}"
+    src: owlp_organizations/
+    dest: "{{ wifi_login_pages_path }}/organizations"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
     mode: 0644
 
 - name: yarn build

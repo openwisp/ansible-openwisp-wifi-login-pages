@@ -28,11 +28,11 @@ cd <path_to_playbook_file >
 mkdir files
 ```
 
-**Step 3**: Copy all the organizations configuration and assets inside `organizations` directory to the
-`files` directory so that the resulting directory structure should be `files/organizations`.
+**Step 3**: Copy all the organizations configuration and assets from `organizations` directory to the
+`files` directory so that the resulting directory structure should be `files/owlp_organizations`.
 
 ```
-cp -r <path_to_organizations_directory> files
+cp -r <path_to_organizations_directory> files/owlp_organizations
 ```
 
 Now run the playbook and the files will be uploaded to remote.
