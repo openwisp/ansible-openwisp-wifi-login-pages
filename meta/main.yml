@@ -2,3 +2,7 @@
 
 collections:
   - community.general
+
+galaxy_info:
+  role_name: openwisp2
+  namespace: openwisp

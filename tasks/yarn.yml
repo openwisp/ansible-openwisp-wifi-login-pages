@@ -51,6 +51,7 @@
 - name: set permissions to client
   file:
     dest: "{{ wifi_login_pages_path }}/client"
+    owner: "{{ www_user }}"
     group: "{{ www_group }}"
     # sets executable only to directories
     mode: u=rwX,g=rX,o=rX
@@ -59,6 +60,7 @@
 - name: set permissions to server
   file:
     dest: "{{ wifi_login_pages_path }}/server"
+    owner: "{{ www_user }}"
     group: "{{ www_group }}"
     # sets executable only to directories
     mode: u=rwX,g=rX,o=rX
@@ -73,24 +75,17 @@
     group: "{{ www_group }}"
     mode: 0644
 
+- name: copy translations (i18n directory)
+  become: true
+  copy:
+    src: owlp_i18n/
+    dest: "{{ wifi_login_pages_path }}/i18n"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: 0644
+
 - name: yarn build
   become: true
   command: "yarn build"
   args:
     chdir: "{{ wifi_login_pages_path }}"
-
-- name: change permissions of client
-  file:
-    dest: "{{ wifi_login_pages_path }}/client"
-    owner: "{{ www_user }}"
-    group: "{{ www_group }}"
-    mode: 0660
-    recurse: true
-
-- name: change permissions of server
-  file:
-    dest: "{{ wifi_login_pages_path }}/server"
-    owner: "{{ www_user }}"
-    group: "{{ www_group }}"
-    mode: 0660
-    recurse: true

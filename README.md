@@ -28,11 +28,20 @@ cd <path_to_playbook_file >
 mkdir files
 ```
 
-**Step 3**: Copy all the organizations configuration and assets from `organizations` directory to the
-`files` directory so that the resulting directory structure should be `files/owlp_organizations`.
+**Step 3**: Copy all the organizations configuration and assets from `organizations` directory
+to the `files/owlp_organizations`.
 
 ```
 cp -r <path_to_organizations_directory> files/owlp_organizations
+```
+
+## Deploy translations
+
+For deploying normal and custom translations copy all the translations from `i18n` directory to
+the `files/owlp_i18n`.
+
+```
+cp -r <path_to_i18n_directory> files/owlp_i18n
 ```
 
 Now run the playbook and the files will be uploaded to remote.
