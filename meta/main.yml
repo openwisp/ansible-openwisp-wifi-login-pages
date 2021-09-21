@@ -4,5 +4,5 @@ collections:
   - community.general
 
 galaxy_info:
-  role_name: openwisp2
+  role_name: wifi_login_pages
   namespace: openwisp
