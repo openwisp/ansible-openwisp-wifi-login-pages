@@ -25,45 +25,13 @@
     owner: "{{ www_user }}"
     state: directory
 
-- name: set permissions to main dir
+- name: set permissions
   file:
     dest: "{{ wifi_login_pages_path }}"
     group: "{{ www_group }}"
-    mode: 0770
-
-- name: set permissions to dist
-  file:
-    dest: "{{ wifi_login_pages_path }}/dist"
-    group: "{{ www_group }}"
     owner: "{{ www_user }}"
     # sets executable only to directories
-    mode: u=rwX,g=rX,o=rX
-    recurse: true
-
-- name: set permissions to node_modules
-  file:
-    dest: "{{ wifi_login_pages_path }}/node_modules"
-    group: "{{ www_group }}"
-    # sets executable only to directories
-    mode: g=rXw,o=rX
-    recurse: true
-
-- name: set permissions to client
-  file:
-    dest: "{{ wifi_login_pages_path }}/client"
-    owner: "{{ www_user }}"
-    group: "{{ www_group }}"
-    # sets executable only to directories
-    mode: u=rwX,g=rX,o=rX
-    recurse: true
-
-- name: set permissions to server
-  file:
-    dest: "{{ wifi_login_pages_path }}/server"
-    owner: "{{ www_user }}"
-    group: "{{ www_group }}"
-    # sets executable only to directories
-    mode: u=rwX,g=rX,o=rX
+    mode: u=rwX,g=rX,o=X
     recurse: true
 
 - name: copy organizations configs and assets
@@ -73,7 +41,7 @@
     dest: "{{ wifi_login_pages_path }}/organizations"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
-    mode: 0644
+    mode: 0640
 
 - name: copy translations (i18n directory)
   become: true
@@ -82,10 +50,11 @@
     dest: "{{ wifi_login_pages_path }}/i18n"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
-    mode: 0644
+    mode: 0640
 
 - name: yarn build
   become: true
+  become_user: "{{ www_user }}"
   command: "yarn build"
   args:
     chdir: "{{ wifi_login_pages_path }}"
