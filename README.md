@@ -6,11 +6,6 @@ Required variables:
 
 - `wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
 
-## Deploying custom static content
-
-Custom static content (HTML files, PDF, etc.) can be deployed
-to `{{ wifi_login_pages_path }}/static/`.
-
 ## Deploy organizations configurations and assets
 
 For deploying organization YAML config files and their related static assets (logo, CSS, etc), proceed
@@ -45,6 +40,13 @@ cp -r <path_to_i18n_directory> files/owlp_i18n
 ```
 
 Now run the playbook and the files will be uploaded to remote.
+
+## Deploying custom static content
+
+For deploying custom static content (HTML files, PDF, etc.) add all the static content inside
+`files/owlp_static` directory.
+The files inside `owlp_static` will be uploaded to remote `static` directory while running
+the playbook.
 
 ## How to run tests
 
