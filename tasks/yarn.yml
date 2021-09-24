@@ -52,6 +52,15 @@
     group: "{{ www_group }}"
     mode: 0640
 
+- name: copy static files
+  become: true
+  copy:
+    src: owlp_static/
+    dest: "{{ wifi_login_pages_path }}/static"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: 0640
+
 - name: yarn build
   become: true
   become_user: "{{ www_user }}"
