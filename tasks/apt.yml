@@ -1,5 +1,25 @@
 ---
 
+- name: Install gpg agent
+  apt:
+    name: gpg-agent
+    update_cache: true
+
+- name: Install git
+  apt:
+    name: git
+    update_cache: true
+
+- name: Install supervisor
+  apt:
+    name: supervisor
+    update_cache: true
+
+- name: Install nginx
+  apt:
+    name: nginx
+    update_cache: true
+
 - name: Add nodejs apt key
   apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
