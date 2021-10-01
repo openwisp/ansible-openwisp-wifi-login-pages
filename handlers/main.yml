@@ -1,7 +1,9 @@
 ---
 
 - name: reload supervisor
-  command: supervisord
+  service:
+    name: supervisor
+    state: restarted
   become: true
 
 - name: restart nginx
