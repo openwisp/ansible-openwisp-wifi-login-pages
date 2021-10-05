@@ -61,6 +61,10 @@ server {
         try_files {{ openwisp2_path }}/dist/maintenance.html $uri @redirect;
     }
 
+    location /static/ {
+        alias {{ wifi_login_pages_path }}/static/;
+    }
+
     # redirect all requests to https
     location @redirect {
         return 301 https://$host$request_uri;
