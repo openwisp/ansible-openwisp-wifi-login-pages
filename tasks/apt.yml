@@ -1,5 +1,27 @@
 ---
 
+- name: Update APT package cache
+  apt:
+    update_cache: true
+  changed_when: false
+  retries: 5
+  delay: 10
+  register: result
+  until: result is success
+
+- name: Install system packages
+  apt:
+    name:
+      - gpg-agent
+      - git
+      - supervisor
+      - nginx
+  ignore_errors: true
+  retries: 5
+  delay: 10
+  register: result
+  until: result is success
+
 - name: Add nodejs apt key
   apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
