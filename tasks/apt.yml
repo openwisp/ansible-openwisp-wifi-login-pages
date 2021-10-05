@@ -1,24 +1,26 @@
 ---
 
-- name: Install gpg agent
+- name: Update APT package cache
   apt:
-    name: gpg-agent
     update_cache: true
+  changed_when: false
+  retries: 5
+  delay: 10
+  register: result
+  until: result is success
 
-- name: Install git
+- name: Install system packages
   apt:
-    name: git
-    update_cache: true
-
-- name: Install supervisor
-  apt:
-    name: supervisor
-    update_cache: true
-
-- name: Install nginx
-  apt:
-    name: nginx
-    update_cache: true
+    name:
+      - gpg-agent
+      - git
+      - supervisor
+      - nginx
+  ignore_errors: true
+  retries: 5
+  delay: 10
+  register: result
+  until: result is success
 
 - name: Add nodejs apt key
   apt_key:
