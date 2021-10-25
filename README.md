@@ -63,7 +63,7 @@ You have to place this ansible role in the working directory
 (i.e. `openwisp-wifi-login-pages-ansible-playbook`):
 
 ```
-git clone https://github.com/openwisp/ansible-openwisp-wifi-login-pages.git
+ansible-galaxy install git+https://github.com/openwisp/ansible-openwisp-wifi-login-pages.git --roles-path .
 ```
 
 ### Create inventory file
