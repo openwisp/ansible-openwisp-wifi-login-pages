@@ -30,7 +30,7 @@ to install openwisp-wifi-login-pages.
 
 ### Install ansible
 
-Install ansible (version 2.5 or higher) **on your local machine** (not the production server!) if
+Install ansible (version 2.10 or higher) **on your local machine** (not the production server!) if
 you haven't done already.
 
 To **install ansible** we suggest you follow the official [ansible installation guide](http://docs.ansible.com/ansible/latest/intro_installation.html).
