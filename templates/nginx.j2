@@ -57,12 +57,12 @@ server {
         try_files $uri /dev/null =404;
     }
 
-    location / {
-        try_files {{ openwisp2_path }}/dist/maintenance.html $uri @redirect;
-    }
-
     location /static/ {
         alias {{ wifi_login_pages_path }}/static/;
+    }
+
+    location / {
+        try_files {{ openwisp2_path }}/dist/maintenance.html $uri @redirect;
     }
 
     # redirect all requests to https
