@@ -31,6 +31,11 @@ server {
                application/x-font-ttf font/opentype;
 
     location @nodejs {
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
+
         proxy_set_header   X-Forwarded-For $remote_addr;
         proxy_set_header   Host $http_host;
         proxy_pass         http://localhost:3030;
