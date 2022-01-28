@@ -4,6 +4,7 @@
   git:
     repo: https://github.com/openwisp/openwisp-wifi-login-pages.git
     dest: "{{ wifi_login_pages_path }}"
+    version: master
     force: true
   tags: git
 
