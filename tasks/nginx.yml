@@ -34,6 +34,13 @@
     mode: 0644
   notify: restart nginx
 
+- name: nginx security configuration
+  copy:
+    src: nginx/security.conf
+    dest: "/etc/nginx/security.conf"
+    mode: 0644
+  notify: restart nginx
+
 - name: nginx site available
   template:
     src: nginx/site-conf.j2

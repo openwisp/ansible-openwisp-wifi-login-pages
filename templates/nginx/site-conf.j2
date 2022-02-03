@@ -11,9 +11,7 @@ server {
     error_log {{ wifi_login_pages_path }}/log/nginx.error.log error;
 
     include ssl.conf;
-
-    add_header Strict-Transport-Security "max-age=31536000";
-    add_header X-Content-Type-Options nosniff;
+    include security.conf;
 
     gzip on;
     gzip_static on;
