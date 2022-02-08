@@ -13,6 +13,12 @@
     state: directory
     mode: 0770
 
+- name: create "{{ openwisp2_path }}/nginx-conf/wifi-login-pages"
+  file:
+    path: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages"
+    state: directory
+    mode: 0770
+
 - name: create SSL cert if not exists yet
   command: >
     openssl req -new -nodes -x509 \
@@ -30,14 +36,14 @@
 - name: nginx SSL configuration
   template:
     src: nginx/ssl-conf.j2
-    dest: "/etc/nginx/ssl.conf"
+    dest: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages/ssl.conf"
     mode: 0644
   notify: restart nginx
 
 - name: nginx security configuration
   copy:
     src: nginx/security.conf
-    dest: "/etc/nginx/security.conf"
+    dest: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages/security.conf"
     mode: 0644
   notify: restart nginx
 
