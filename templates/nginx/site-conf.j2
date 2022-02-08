@@ -10,8 +10,8 @@ server {
     access_log {{ wifi_login_pages_path }}/log/nginx.access.log;
     error_log {{ wifi_login_pages_path }}/log/nginx.error.log error;
 
-    include ssl.conf;
-    include security.conf;
+    include {{ openwisp2_path }}/nginx-conf/wifi-login-pages/ssl.conf;
+    include {{ openwisp2_path }}/nginx-conf/wifi-login-pages/security.conf;
 
     gzip on;
     gzip_static on;
