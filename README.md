@@ -56,10 +56,7 @@ cd ~/openwisp-wifi-login-pages-ansible-playbook
 
 Putting this working directory under version control is also a very good idea.
 
-### Adding role in working directory
-
-You have to place this ansible role in the working directory
-(i.e. `openwisp-wifi-login-pages-ansible-playbook`):
+### Install ansible role from ansible-galaxy
 
 ```
 ansible-galaxy install openwisp.wifi_login_pages
@@ -198,7 +195,6 @@ pip install molecule[docker] yamllint ansible-lint docker
 **Step 4**: Download docker images
 
 ```
-
 docker pull geerlingguy/docker-ubuntu2204-ansible:latest
 docker pull geerlingguy/docker-ubuntu2004-ansible:latest
 docker pull geerlingguy/docker-debian11-ansible:latest
