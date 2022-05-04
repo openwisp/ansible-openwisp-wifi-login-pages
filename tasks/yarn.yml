@@ -44,6 +44,7 @@
     group: "{{ www_group }}"
     mode: 0640
   failed_when: false
+  tags: [assets]
 
 - name: copy translations (i18n directory)
   become: true
@@ -54,6 +55,7 @@
     group: "{{ www_group }}"
     mode: 0640
   failed_when: false
+  tags: [i18n]
 
 - name: copy static files
   become: true
