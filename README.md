@@ -40,10 +40,6 @@ Please ensure that you have the correct version of Jinja installed in your Pytho
 pip install Jinja>=2.11
 ```
 
-After having installed ansible, **you need to install git** (example for linux debian/ubuntu systems):
-
-    sudo apt-get install git
-
 ### Choose a working directory
 
 Choose a working directory **on your local machine** where to put the configuration of
@@ -66,7 +62,7 @@ You have to place this ansible role in the working directory
 (i.e. `openwisp-wifi-login-pages-ansible-playbook`):
 
 ```
-ansible-galaxy install git+https://github.com/openwisp/ansible-openwisp-wifi-login-pages.git --roles-path .
+ansible-galaxy install openwisp.wifi_login_pages
 ```
 
 ### Create inventory file
@@ -90,7 +86,7 @@ Create a new playbook file `playbook.yml` **on your local machine** with the fol
 - hosts: openwisp-wifi-login-pages
   become: "{{ become | default('yes') }}"
   roles:
-    - ansible-openwisp-wifi-login-pages
+    - openwisp.wifi_login_pages
   vars:
     wifi_login_pages_domains: ["wifi.openwisp.org"]
 ```
