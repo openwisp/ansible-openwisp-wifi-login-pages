@@ -6,3 +6,20 @@ collections:
 galaxy_info:
   role_name: wifi_login_pages
   namespace: openwisp
+  author: OpenWISP
+  company: OpenWISP
+  description: Role to install and upgrade OpenWISP WiFi Login Pages
+  min_ansible_version: 2.10
+  issue_tracker_url: https://github.com/openwisp/openwisp-wifi-login-pages/issues
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - openwisp
+    - wifi
+    - captive_portal
