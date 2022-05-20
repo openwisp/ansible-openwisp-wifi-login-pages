@@ -1,5 +1,4 @@
 ---
-
 - name: openwisp-wifi-login-pages.git
   git:
     repo: https://github.com/openwisp/openwisp-wifi-login-pages.git
@@ -34,6 +33,11 @@
     # sets executable only to directories
     mode: u=rwX,g=rX,o=X
     recurse: true
+
+- name: set permissions to main dir
+  file:
+    dest: "{{ wifi_login_pages_path }}"
+    owner: "root"
 
 - name: copy organizations configs and assets
   become: true
