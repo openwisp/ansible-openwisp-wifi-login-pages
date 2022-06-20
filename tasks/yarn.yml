@@ -26,6 +26,13 @@
     owner: "{{ www_user }}"
     state: directory
 
+- name: create npm directory
+  file:
+    dest: "/var/www/.npm"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    state: directory
+
 - name: set permissions
   file:
     dest: "{{ wifi_login_pages_path }}"
