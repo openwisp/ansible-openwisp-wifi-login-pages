@@ -39,7 +39,6 @@ provisioner:
     verify: ../resources/verify.yml
   config_options:
     defaults:
-      stdout_callback: yaml
       bin_ansible_callbacks: true
 verifier:
   name: ansible
