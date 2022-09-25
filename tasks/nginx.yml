@@ -41,8 +41,8 @@
   notify: restart nginx
 
 - name: nginx security configuration
-  copy:
-    src: nginx/security.conf
+  template:
+    src: nginx/security-conf.j2
     dest: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages/security.conf"
     mode: 0644
   notify: restart nginx

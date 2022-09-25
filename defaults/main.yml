@@ -5,6 +5,9 @@ wifi_login_pages_domains: []
 wifi_login_pages_path: "{{ openwisp2_path }}/wifi-login-pages"
 wifi_login_pages_ssl_cert: "{{ openwisp2_path }}/ssl/server.crt"
 wifi_login_pages_ssl_key: "{{ openwisp2_path }}/ssl/server.key"
+wifi_login_pages_nginx_csp: >
+  "default-src 'self' http: https: data: blob: 'unsafe-inline';
+  frame-ancestors 'self';" always;
 supervisor_path: "/etc/supervisor/conf.d/%s.conf"
 www_group: "www-data"
 www_user: "www-data"
