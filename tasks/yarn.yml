@@ -45,7 +45,7 @@
 - name: copy organizations configs and assets
   become: true
   copy:
-    src: owlp_organizations/
+    src: "{{ wifi_login_pages_organizations_src }}"
     dest: "{{ wifi_login_pages_path }}/organizations"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
