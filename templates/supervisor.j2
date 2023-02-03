@@ -2,6 +2,7 @@
 user={{ www_user }}
 directory={{ wifi_login_pages_path }}
 command=/bin/bash -c "yarn setup && node server/start.js"
+environment=NODE_ENV=production
 autostart=true
 autorestart=true
 stopsignal=INT
