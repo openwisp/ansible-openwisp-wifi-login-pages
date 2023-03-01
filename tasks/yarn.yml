@@ -80,3 +80,4 @@
   command: "yarn build"
   args:
     chdir: "{{ wifi_login_pages_path }}"
+  tags: [yarn-build]
