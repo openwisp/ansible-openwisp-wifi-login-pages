@@ -10,4 +10,4 @@
   tasks:
     - name: "Include ansible role"
       include_role:
-        name: "ansible-openwisp-wifi-login-pages"
+        name: "openwisp.wifi_login_pages"

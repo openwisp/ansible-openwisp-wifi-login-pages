@@ -35,7 +35,8 @@ jobs:
 
       - name: Install python dependencies
         run: |
-          pip install -U pip wheel molecule[docker] ansible ansible-core~=2.13.0 yamllint ansible-lint docker openwisp-utils[qa]~=1.0.0
+          pip install molecule molecule-plugins[docker] yamllint ansible-lint docker
+          pip install openwisp-utils[qa]
 
       - name: Install Ansible Galaxy dependencies
         run: ansible-galaxy collection install "community.general:>=3.6.0"
@@ -45,7 +46,10 @@ jobs:
           openwisp-qa-check --skip-isort --skip-flake8 --skip-checkmigrations --skip-black
 
       - name: Tests
-        run: molecule test
+        run: |
+          mkdir -p ~/.ansible/roles
+          ln -s $GITHUB_WORKSPACE ~/.ansible/roles/openwisp.wifi_login_pages
+          molecule test
         env:
           ROLE_NAME: openwisp2
           PY_COLORS: '1'
