@@ -27,9 +27,9 @@
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
 
-- name: Add nodejs 16.x ppa for apt repo
+- name: Add nodejs 20.x ppa for apt repo
   apt_repository:
-    repo: "deb https://deb.nodesource.com/node_16.x {{ ansible_distribution_release.lower() }} main"
+    repo: "deb https://deb.nodesource.com/node_20.x {{ ansible_distribution_release.lower() }} main"
 
 - name: Add yarn apt key
   apt_key:
@@ -46,4 +46,4 @@
     name:
       - nodejs
       - yarn
-    state: present
+    state: latest
