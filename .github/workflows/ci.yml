@@ -48,11 +48,14 @@ jobs:
         run: |
           openwisp-qa-check --skip-isort --skip-flake8 --skip-checkmigrations --skip-black
 
+      - name: Debugging step - show environment variables
+        run: env
+
       - name: Tests
         run: |
           mkdir -p ~/.ansible/roles
           ln -s $GITHUB_WORKSPACE ~/.ansible/roles/openwisp.wifi_login_pages
-          molecule test
+          molecule -vvv test
         env:
           ROLE_NAME: openwisp2
           PY_COLORS: '1'
