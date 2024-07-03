@@ -73,6 +73,7 @@
     group: "{{ www_group }}"
     mode: 0640
   failed_when: false
+  tags: [assets]
 
 - name: yarn build
   become: true
