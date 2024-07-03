@@ -31,7 +31,7 @@ to install openwisp-wifi-login-pages.
 
 ### Install ansible
 
-Install ansible (version 2.10 or higher) **on your local machine** (not the production server!) if
+Install ansible (version 2.13 or higher) **on your local machine** (not the production server!) if
 you haven't done already.
 
 To **install ansible** we suggest you follow the official [ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-in-a-virtual-environment-with-pip). It is recommended to install ansible through a virtual environment to avoid dependency issues.
@@ -196,9 +196,11 @@ pip install molecule[docker] yamllint ansible-lint docker
 **Step 4**: Download docker images
 
 ```
+docker pull geerlingguy/docker-ubuntu2404-ansible:latest
 docker pull geerlingguy/docker-ubuntu2204-ansible:latest
 docker pull geerlingguy/docker-ubuntu2004-ansible:latest
 docker pull geerlingguy/docker-debian11-ansible:latest
+docker pull geerlingguy/docker-debian12-ansible:latest
 ```
 
 **Step 5**: Install ansible dependencies

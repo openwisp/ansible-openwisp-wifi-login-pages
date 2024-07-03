@@ -13,14 +13,16 @@ on:             # yamllint disable-line rule:truthy
 jobs:
   build:
     name: Build ${{ matrix.distro }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
       matrix:
         distro:
+          - ubuntu2404
           - ubuntu2204
           - ubuntu2004
+          - debian12
           - debian11
 
     steps:
@@ -56,3 +58,4 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+          ANSIBLE_CONFIG: molecule/default/ansible.cfg
