@@ -29,7 +29,7 @@
 
 - name: Add nodejs 20.x ppa for apt repo
   apt_repository:
-    repo: "deb https://deb.nodesource.com/node_20.x {{ ansible_distribution_release.lower() }} main"
+    repo: "deb https://deb.nodesource.com/node_20.x nodistro main"
 
 - name: Add yarn apt key
   apt_key:
