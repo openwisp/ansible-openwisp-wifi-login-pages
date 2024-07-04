@@ -1,6 +1,6 @@
 # ansible-openwisp-wifi-login-pages
 
-[![Build Status](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/workflows/Ansible%20OpenWISP%20WiFi%20Login%20Pages%20CI%20Build/badge.svg?branch=master)](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/actions)
+[![Ansible OpenWISP WiFi Login Pages CI Build](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/actions/workflows/ci.yml/badge.svg)](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/actions/workflows/ci.yml)
 
 Ansible role to deploy and manage [openwisp-wifi-login-pages](https://github.com/openwisp/openwisp-wifi-login-pages).
 
