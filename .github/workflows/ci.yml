@@ -35,27 +35,23 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install python dependencies
+      - name: Install Dependencies
+        id: deps
         run: |
           pip install molecule molecule-plugins[docker] yamllint ansible-lint docker
           pip install openwisp-utils[qa]
-
-      - name: Install Ansible Galaxy dependencies
-        run: ansible-galaxy collection install "community.general:>=3.6.0"
+          ansible-galaxy collection install "community.general:>=3.6.0"
 
       - name: QA checks
-        continue-on-error: true
         run: |
           openwisp-qa-check --skip-isort --skip-flake8 --skip-checkmigrations --skip-black
 
-      - name: Debugging step - show environment variables
-        run: env
-
       - name: Tests
+        if: ${{ !cancelled() && steps.deps.conclusion == 'success' }}
         run: |
           mkdir -p ~/.ansible/roles
           ln -s $GITHUB_WORKSPACE ~/.ansible/roles/openwisp.wifi_login_pages
-          molecule -vvv test
+          molecule test
         env:
           ROLE_NAME: openwisp2
           PY_COLORS: '1'
