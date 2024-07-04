@@ -22,23 +22,39 @@
   register: result
   until: result is success
 
-- name: Add nodejs apt key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+- name: NodeJS deb source
+  block:
+    - name: Download nodesource gpg key
+      get_url:
+        url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+        dest: /etc/apt/trusted.gpg.d/nodesource.asc
+        checksum: sha256:332d428848005f43bfc79b9578c55cd172f5f17ae38aa7d9328f03a24e21c13a
+      ignore_errors: true
+      retries: 5
+      delay: 10
+      register: result
+      until: result is success
 
-- name: Add nodejs 20.x ppa for apt repo
-  apt_repository:
-    repo: "deb https://deb.nodesource.com/node_20.x nodistro main"
+    - name: Add nodejs 20.x ppa for apt repo
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodesource.asc] https://deb.nodesource.com/node_20.x nodistro main"
 
-- name: Add yarn apt key
-  apt_key:
-    url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    state: present
+- name: Yarn deb source
+  block:
+    - name: Download dl.yarnpkg.com gpg key
+      ansible.builtin.get_url:
+        url: https://dl.yarnpkg.com/debian/pubkey.gpg
+        dest: /etc/apt/trusted.gpg.d/yarnpkg.asc
+        checksum: sha256:8550a7e298b523fffa899069754fc150f2ff74092701e4d4109edd1cd6d5327f
+      ignore_errors: true
+      retries: 5
+      delay: 10
+      register: result
+      until: result is success
 
-- name: Add yarn ppa for apt repo
-  apt_repository:
-    repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+    - name: Add nodejs 20.x ppa for apt repo
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/yarnpkg.asc] https://dl.yarnpkg.com/debian/ stable main"
 
 - name: Install nodejs and yarn
   apt:
@@ -47,3 +63,8 @@
       - nodejs
       - yarn
     state: latest
+  ignore_errors: true
+  retries: 5
+  delay: 10
+  register: result
+  until: result is success
