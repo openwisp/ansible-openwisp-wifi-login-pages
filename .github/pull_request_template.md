@@ -9,7 +9,7 @@
 
 Closes #<issue-number>.
 
-Please [open a new issue](https://github.com/openwisp/django-loci/issues/new/choose) if there isn't an existing issue yet.
+Please [open a new issue](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/issues/new/choose) if there isn't an existing issue yet.
 
 ## Description of Changes
 
