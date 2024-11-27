@@ -2,9 +2,9 @@
 
 - name: openwisp-wifi-login-pages.git
   git:
-    repo: https://github.com/openwisp/openwisp-wifi-login-pages.git
+    repo: "{{ wifi_login_pages_repo_url}}"
     dest: "{{ wifi_login_pages_path }}"
-    version: 1.1.0
+    version: "{{ wifi_login_pages_version }}"
     force: true
   tags: git
 
