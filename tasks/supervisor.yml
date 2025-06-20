@@ -1,4 +1,10 @@
 ---
+- name: Start and enable supervisor service
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+  become: true
 
 - name: supervisor configuration
   template:
