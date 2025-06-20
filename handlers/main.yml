@@ -4,17 +4,14 @@
     name: supervisor
     state: started
     enabled: yes
-  become: true
 
 - name: reload supervisor
   shell: |
     supervisorctl reread
     supervisorctl update
     supervisorctl restart wifi_login_pages || supervisorctl start wifi_login_pages
-  become: true
 
 - name: restart nginx
   service:
     name: nginx
     state: restarted
-  become: true
