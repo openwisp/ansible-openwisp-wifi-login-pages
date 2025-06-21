@@ -5,11 +5,13 @@
     state: started
     enabled: yes
 
-- name: reload supervisor
-  shell: |
-    supervisorctl reread
-    supervisorctl update
-    supervisorctl restart wifi_login_pages || supervisorctl start wifi_login_pages
+- name: Update supervisor configuration
+  command: supervisorctl update wifi_login_pages
+  register: supervisord_update_wifi_login_pages
+
+- name: Restart wifi_login_pages
+  command: supervisorctl restart wifi_login_pages
+  when: not (supervisord_update_wifi_login_pages is defined and "wifi_login_pages:" in supervisord_update_wifi_login_pages.stdout)
 
 - name: restart nginx
   service:
