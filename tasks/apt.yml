@@ -16,6 +16,7 @@
       - git
       - supervisor
       - nginx
+      - logrotate
   ignore_errors: true
   retries: 5
   delay: 10
