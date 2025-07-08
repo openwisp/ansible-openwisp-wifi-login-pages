@@ -61,6 +61,6 @@
 
 - name: Configure nginx log rotation
   template:
-    src: logrotate.d/openwisp-nginx.j2
-    dest: "/etc/logrotate.d/openwisp-nginx"
+    src: logrotate.d/owlp-nginx.j2
+    dest: "/etc/logrotate.d/owlp-nginx"
     mode: 0644
