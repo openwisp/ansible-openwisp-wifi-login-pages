@@ -1,6 +1,7 @@
 {{ wifi_login_pages_path }}/log/nginx*.log {
         daily
         dateext
+        maxsize 60M
         missingok
         rotate 10
         compress
