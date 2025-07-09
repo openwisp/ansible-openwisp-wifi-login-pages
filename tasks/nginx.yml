@@ -58,3 +58,9 @@
     dest: "/etc/nginx/sites-enabled/wifi_login_pages"
     state: link
   notify: restart nginx
+
+- name: Configure nginx log rotation
+  template:
+    src: logrotate.d/owlp-nginx.j2
+    dest: "/etc/logrotate.d/owlp-nginx"
+    mode: 0644

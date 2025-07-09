@@ -1,0 +1,16 @@
+{{ wifi_login_pages_path }}/log/nginx*.log {
+        daily
+        dateext
+        maxsize 60M
+        missingok
+        rotate 10
+        compress
+        delaycompress
+        notifempty
+        create 0640 {{ www_user }} {{ www_group }}
+        su root {{ www_user }}
+        sharedscripts
+        postrotate
+                service nginx rotate >/dev/null 2>&1
+        endscript
+}
