@@ -1,0 +1,5 @@
+openwisp-qa-check \
+--skip-isort \
+--skip-flake8 z
+--skip-checkmigrations \
+--skip-black \
