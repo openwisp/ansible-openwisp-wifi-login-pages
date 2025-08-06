@@ -57,3 +57,19 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+
+  import:
+    name: Update imports on Ansible Galaxy
+    runs-on: ubuntu-24.04
+    container: python:3-slim
+    needs:
+      - build
+
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - name: Install ansible
+        run: pip install ansible
+
+      - name: Update imports on Ansible Galaxy
+        run: |
+          ansible-galaxy role import --api-key ${{ secrets.GALAXY_API_KEY }} openwisp ansible-openwisp-wifi-login-pages
