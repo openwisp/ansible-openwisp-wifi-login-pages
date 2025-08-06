@@ -1,0 +1,27 @@
+---
+
+name: Ansible WireGuard OpenWISP Publish Release
+
+on:             # yamllint disable-line rule:truthy
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    name: Publish the role on Ansible Galaxy
+    runs-on: ubuntu-24.04
+    container: python:3-slim
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install ansible
+        run: pip install ansible
+
+      - name: Update imports on Ansible Galaxy
+        run: |
+          ansible-galaxy role import openwisp ansible-openwisp-wifi-login-pages --api-key ${{ secrets.GALAXY_API_KEY }} --role-name wifi_login_pages
