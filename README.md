@@ -179,21 +179,22 @@ Clone repository by:
 git clone https://github.com/<your_fork>/ansible-openwisp-wifi-login-pages.git
 ```
 
-**Step 2**: Install docker
+**Step 2**: Install docker.
 
-If you haven't installed docker yet, you need to install it (example for linux debian/ubuntu systems):
+If you haven't installed docker yet, you need to install it
+(example for linux debian/ubuntu systems):
 
 ```
 sudo apt-get install docker.io
 ```
 
-**Step 3**: Install molecule and dependences
+**Step 3**: Install test dependencies:
 
 ```
-pip install molecule[docker] yamllint ansible-lint docker
+pip install -r requirements-test.txt
 ```
 
-**Step 4**: Download docker images
+**Step 4**: Download docker images:
 
 ```
 docker pull geerlingguy/docker-ubuntu2404-ansible:latest
