@@ -1,7 +1,14 @@
 ---
+- name: Start and enable supervisor service
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+  become: true
+  notify: Update supervisor configuration
 
 - name: supervisor configuration
   template:
     src: supervisor.j2
     dest: "{{ supervisor_path | format('wifi_login_pages') }}"
-  notify: reload supervisor
+  notify: Update supervisor configuration
