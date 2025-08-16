@@ -32,13 +32,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: '3.12'
 
       - name: Install Dependencies
         id: deps
         run: |
-          pip install molecule molecule-plugins[docker] yamllint ansible-lint docker
-          pip install openwisp-utils[qa]
+          pip install -U pip wheel setuptools
+          pip install -r requirements-test.txt
           ansible-galaxy collection install "community.general:>=3.6.0"
 
       - name: QA checks
