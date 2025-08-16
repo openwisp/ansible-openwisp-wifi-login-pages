@@ -16,10 +16,10 @@ scenario:
     - verify
     - cleanup
     - destroy
-  lint: |
-    set -e
-    yamllint .
-    ansible-lint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
 platforms:
   - name: "${ROLE_NAME:-instance}-${MOLECULE_DISTRO}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO}-ansible:${tag:-latest}"
