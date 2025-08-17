@@ -3,3 +3,7 @@ openwisp-qa-check \
 --skip-flake8 \
 --skip-checkmigrations \
 --skip-black \
+
+yamllint .
+
+ansible-lint
