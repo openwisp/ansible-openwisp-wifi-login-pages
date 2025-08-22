@@ -1,6 +1,6 @@
 ---
+name: Ansible OpenWISP WiFi Login Pages Publish Release
 
-name: Ansible WireGuard OpenWISP Publish Release
 
 on:             # yamllint disable-line rule:truthy
   release:
