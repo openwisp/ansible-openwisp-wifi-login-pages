@@ -1,8 +1,7 @@
 ---
-
 name: Ansible OpenWISP WiFi Login Pages CI Build
 
-on:             # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches:
       - master
@@ -33,7 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install Dependencies
         id: deps
@@ -54,6 +53,6 @@ jobs:
           molecule test
         env:
           ROLE_NAME: openwisp2
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
           MOLECULE_DISTRO: ${{ matrix.distro }}

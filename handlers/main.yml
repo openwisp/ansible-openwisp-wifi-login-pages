@@ -1,5 +1,4 @@
 ---
-
 - name: reload supervisor
   service:
     name: supervisor

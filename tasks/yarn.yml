@@ -1,5 +1,4 @@
 ---
-
 - name: openwisp-wifi-login-pages.git
   git:
     repo: "{{ wifi_login_pages_repo_url}}"

@@ -1,5 +1,4 @@
 ---
-
 - name: Update APT package cache
   apt:
     update_cache: true
