@@ -42,8 +42,7 @@ jobs:
           ansible-galaxy collection install "community.general:>=3.6.0"
 
       - name: QA checks
-        run: |
-          openwisp-qa-check --skip-isort --skip-flake8 --skip-checkmigrations --skip-black
+        run: ./run-qa-checks
 
       - name: Tests
         if: ${{ !cancelled() && steps.deps.conclusion == 'success' }}
