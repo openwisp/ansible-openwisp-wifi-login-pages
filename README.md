@@ -4,7 +4,59 @@
 
 Ansible role to deploy and manage [openwisp-wifi-login-pages](https://github.com/openwisp/openwisp-wifi-login-pages).
 
-Required variables:
+## Role Variables
+
+Below are the variables you can customize. See also the exact defaults in [`defaults/main.yml`](defaults/main.yml).
+
+**Required variables**
+
+`wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
+
+```yaml
+- hosts all
+  vars:
+    # Base path where OpenWISP components live
+    openwisp2_path: "/opt/openwisp2"
+
+    # WiFi Login Pages source and version
+    wifi_login_pages_repo_url: "https://github.com/openwisp/openwisp-wifi-login-pages.git"
+    wifi_login_pages_version: "1.1.0"
+
+    # Hostnames where the app will be reachable (REQUIRED)
+    wifi_login_pages_domains: []
+
+    # Install and runtime paths
+    wifi_login_pages_path: "{{ openwisp2_path }}/wifi-login-pages"
+
+    # TLS certificate and key used by web-server for the app
+    wifi_login_pages_ssl_cert: "{{ openwisp2_path }}/ssl/server.crt"
+    wifi_login_pages_ssl_key: "{{ openwisp2_path }}/ssl/server.key"
+
+    # nginx Content-Security-Policy snippet
+    wifi_login_pages_nginx_csp: >
+      "default-src 'self' http: https: data: blob: 'unsafe-inline';
+      frame-ancestors 'self';" always;
+
+    # Local directory with organizations configuration and assets (uploaded if present)
+    wifi_login_pages_organizations_src: "owlp_organizations/"
+
+    # Supervisor config destination pattern
+    supervisor_path: "/etc/supervisor/conf.d/%s.conf"
+
+    # System linux group/user (of web-server) for runtime files and build steps
+    www_group: "www-data"
+    www_user: "www-data"
+
+    # Subject for self-signed TLS certificate generation (used if no cert exists)
+    openwisp2_ssl_country: "US"
+    openwisp2_ssl_state: "California"
+    openwisp2_ssl_locality: "San Francisco"
+    openwisp2_ssl_organization: "IT dep."
+    openwisp2_ssl_common_name: "{{ inventory_hostname }}"
+
+  roles:
+    - ansible-openwisp-wifi-login-pages
+```
 
 - `wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
 - `wifi_login_pages_organizations_src`: local path of the directory containing the configuration of the organizations
