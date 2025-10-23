@@ -10,7 +10,8 @@ Below are the variables you can customize. See also the exact defaults in [`defa
 
 **Required variables**
 
-`wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
+- `wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
+- `wifi_login_pages_organizations_src`: local path of the directory containing the configuration of the organizations
 
 ```yaml
 - hosts all
@@ -57,9 +58,6 @@ Below are the variables you can customize. See also the exact defaults in [`defa
   roles:
     - ansible-openwisp-wifi-login-pages
 ```
-
-- `wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
-- `wifi_login_pages_organizations_src`: local path of the directory containing the configuration of the organizations
 
 ## Usage (tutorial)
 
