@@ -14,7 +14,7 @@ Below are the variables you can customize. See also the exact defaults in [`defa
 - `wifi_login_pages_organizations_src`: local path of the directory containing the configuration of the organizations
 
 ```yaml
-- hosts all
+- hosts: all
   vars:
     # Base path where OpenWISP components live
     openwisp2_path: "/opt/openwisp2"
