@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.3.1 [2025-12-22]
+
+- Default `wifi_login_pages_version` to stable 1.2 branch of openwisp-wifi-login-pages.
+
 ## Version 1.3.0 [2025-10-24]
 
 ### Features
