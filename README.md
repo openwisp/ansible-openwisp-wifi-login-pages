@@ -6,15 +6,15 @@ Ansible role to deploy and manage [openwisp-wifi-login-pages](https://github.com
 
 ## Role Variables
 
-Below are the variables you can customize. See also the exact defaults in [`defaults/main.yml`](defaults/main.yml).
-
-**Required variables**
-
-- `wifi_login_pages_domains`: a list with the hostname where the app will be reachable.
-- `wifi_login_pages_organizations_src`: local path of the directory containing the configuration of the organizations
+Below are listed all the variables you can customize
+(you may also want to take a look at
+[the default values of these variables](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/blob/master/defaults/main.yml)).
 
 ```yaml
 - hosts: all
+  become: "{{ become | default('yes') }}"
+  roles:
+    - openwisp.wifi_login_pages
   vars:
     # Base path where OpenWISP components live
     openwisp2_path: "/opt/openwisp2"
@@ -24,7 +24,7 @@ Below are the variables you can customize. See also the exact defaults in [`defa
     wifi_login_pages_version: "1.1.0"
 
     # Hostnames where the app will be reachable (REQUIRED)
-    wifi_login_pages_domains: []
+    wifi_login_pages_domains: ["wifi.example.org"]
 
     # Install and runtime paths
     wifi_login_pages_path: "{{ openwisp2_path }}/wifi-login-pages"
@@ -54,9 +54,6 @@ Below are the variables you can customize. See also the exact defaults in [`defa
     openwisp2_ssl_locality: "San Francisco"
     openwisp2_ssl_organization: "IT dep."
     openwisp2_ssl_common_name: "{{ inventory_hostname }}"
-
-  roles:
-    - ansible-openwisp-wifi-login-pages
 ```
 
 ## Usage (tutorial)
