@@ -1,5 +1,19 @@
 # Changelog
 
+## Version 1.3.1 [2025-12-22]
+
+- Default `wifi_login_pages_version` to stable 1.2 branch of openwisp-wifi-login-pages.
+
+## Version 1.3.0 [2025-10-24]
+
+### Features
+
+- Added logrotate config for nginx logs [#46](https://github.com/openwisp/ansible-openwisp-wifi-login-pages/issues/46)
+
+### Changes
+
+- Upgraded to WiFi Login Pages to 1.2.x (see [changelog](https://github.com/openwisp/openwisp-wifi-login-pages/releases/tag/1.2.0))
+
 ## 1.2.0 [2024-11-27]
 
 ### Changes
