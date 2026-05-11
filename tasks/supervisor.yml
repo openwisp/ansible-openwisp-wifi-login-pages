@@ -1,5 +1,4 @@
 ---
-
 - name: supervisor configuration
   template:
     src: supervisor.j2

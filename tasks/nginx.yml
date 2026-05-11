@@ -1,5 +1,4 @@
 ---
-
 - name: create static directory
   file:
     dest: "{{ wifi_login_pages_path }}/static"

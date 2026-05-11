@@ -1,5 +1,4 @@
 ---
-
 - name: Update APT package cache
   apt:
     update_cache: true
@@ -29,7 +28,7 @@
       get_url:
         url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
         dest: /etc/apt/trusted.gpg.d/nodesource.asc
-        checksum: sha256:332d428848005f43bfc79b9578c55cd172f5f17ae38aa7d9328f03a24e21c13a
+        checksum: sha256:b42e0321dabdc24e892115da705cf061167eac12a317f23d329862d0aa0a271d
       ignore_errors: true
       retries: 5
       delay: 10
@@ -46,7 +45,7 @@
       ansible.builtin.get_url:
         url: https://dl.yarnpkg.com/debian/pubkey.gpg
         dest: /etc/apt/trusted.gpg.d/yarnpkg.asc
-        checksum: sha256:8550a7e298b523fffa899069754fc150f2ff74092701e4d4109edd1cd6d5327f
+        checksum: sha256:f8f78154312934e7894e29da119c9fb06b489d36e0b36ec1538a5b8486a2f59e
       ignore_errors: true
       retries: 5
       delay: 10

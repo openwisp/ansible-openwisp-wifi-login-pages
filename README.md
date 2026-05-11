@@ -37,6 +37,7 @@ you haven't done already.
 To **install ansible** we suggest you follow the official [ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-in-a-virtual-environment-with-pip). It is recommended to install ansible through a virtual environment to avoid dependency issues.
 
 Please ensure that you have the correct version of Jinja installed in your Python environment:
+
 ```
 pip install Jinja>=2.11
 ```
@@ -200,8 +201,9 @@ pip install -r requirements-test.txt
 docker pull geerlingguy/docker-ubuntu2404-ansible:latest
 docker pull geerlingguy/docker-ubuntu2204-ansible:latest
 docker pull geerlingguy/docker-ubuntu2004-ansible:latest
-docker pull geerlingguy/docker-debian11-ansible:latest
+docker pull geerlingguy/docker-debian13-ansible:latest
 docker pull geerlingguy/docker-debian12-ansible:latest
+docker pull geerlingguy/docker-debian11-ansible:latest
 ```
 
 **Step 5**: Install ansible dependencies

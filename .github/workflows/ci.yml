@@ -21,18 +21,19 @@ jobs:
           - ubuntu2404
           - ubuntu2204
           - ubuntu2004
+          - debian13
           - debian12
           - debian11
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install Dependencies
         id: deps
@@ -40,6 +41,10 @@ jobs:
           pip install -U pip wheel setuptools
           pip install -r requirements-test.txt
           ansible-galaxy collection install "community.general:>=3.6.0"
+
+      - name: Downgrade ansible on Ubuntu 20.04 LTS
+        if: matrix.distro == 'ubuntu2004'
+        run: pip install "ansible-core<2.19"
 
       - name: QA checks
         run: ./run-qa-checks
