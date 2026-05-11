@@ -1,15 +1,12 @@
-echo 'Running checks for ansible-openwisp-wifi-login-pages'
+#!/bin/bash
 
-openwisp-qa-check \
---skip-isort \
---skip-flake8 \
---skip-checkmigrations \
---skip-black \
-
-echo 'Running yamllint'
+set -e
 
 yamllint .
-
-echo 'Running ansible-lint'
-
 ansible-lint
+
+openwisp-qa-check \
+  --skip-isort \
+  --skip-flake8 \
+  --skip-checkmigrations \
+  --skip-black
