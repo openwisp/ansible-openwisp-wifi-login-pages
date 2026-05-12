@@ -1,65 +1,72 @@
 ---
-- name: create static directory
-  file:
+- name: Create static directory
+  ansible.builtin.file:
     dest: "{{ wifi_login_pages_path }}/static"
     group: "{{ www_group }}"
     owner: "{{ www_user }}"
     state: directory
+    mode: "0755"
 
-- name: create "{{ openwisp2_path }}/ssl"
-  file:
+- name: Create ssl directory
+  ansible.builtin.file:
     path: "{{ openwisp2_path }}/ssl"
     state: directory
-    mode: 0770
+    mode: "0770"
 
-- name: create "{{ openwisp2_path }}/nginx-conf/wifi-login-pages"
-  file:
+- name: Create nginx-conf directory
+  ansible.builtin.file:
     path: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages"
     state: directory
-    mode: 0770
+    mode: "0770"
 
-- name: create SSL cert if not exists yet
-  command: >
-    openssl req -new -nodes -x509 \
-    -subj "/C={{ openwisp2_ssl_country }}/ST={{ openwisp2_ssl_state }} \
-           /L={{ openwisp2_ssl_locality }}/O={{ openwisp2_ssl_organization }} \
-           /CN={{ openwisp2_ssl_common_name }}" \
-    -days 3650 \
-    -keyout {{ wifi_login_pages_ssl_key }} \
-    -out {{ wifi_login_pages_ssl_cert }} \
-    -extensions v3_ca creates={{ wifi_login_pages_ssl_cert }}
-  notify: restart nginx
+- name: Create SSL cert if not exists yet
+  vars:
+    ssl_subj: >-
+      /C={{ openwisp2_ssl_country }}/ST={{
+      openwisp2_ssl_state }}/L={{ openwisp2_ssl_locality
+      }}/O={{ openwisp2_ssl_organization }}/CN={{
+      openwisp2_ssl_common_name }}
+  ansible.builtin.command: >-
+    openssl req -new -nodes -x509
+    -subj "{{ ssl_subj }}"
+    -days 3650
+    -keyout {{ wifi_login_pages_ssl_key }}
+    -out {{ wifi_login_pages_ssl_cert }}
+    -extensions v3_ca
+  args:
+    creates: "{{ wifi_login_pages_ssl_cert }}"
+  notify: Restart nginx
 
-- name: nginx SSL configuration
-  template:
+- name: Nginx SSL configuration
+  ansible.builtin.template:
     src: nginx/ssl-conf.j2
     dest: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages/ssl.conf"
-    mode: 0644
-  notify: restart nginx
+    mode: "0644"
+  notify: Restart nginx
 
-- name: nginx security configuration
-  template:
+- name: Nginx security configuration
+  ansible.builtin.template:
     src: nginx/security-conf.j2
     dest: "{{ openwisp2_path }}/nginx-conf/wifi-login-pages/security.conf"
-    mode: 0644
-  notify: restart nginx
+    mode: "0644"
+  notify: Restart nginx
 
-- name: nginx site available
-  template:
+- name: Nginx site available
+  ansible.builtin.template:
     src: nginx/site-conf.j2
     dest: "/etc/nginx/sites-available/wifi_login_pages"
-    mode: 0644
-  notify: restart nginx
+    mode: "0644"
+  notify: Restart nginx
 
-- name: enable nginx site
-  file:
+- name: Enable nginx site
+  ansible.builtin.file:
     src: "/etc/nginx/sites-available/wifi_login_pages"
     dest: "/etc/nginx/sites-enabled/wifi_login_pages"
     state: link
-  notify: restart nginx
+  notify: Restart nginx
 
 - name: Configure nginx log rotation
-  template:
+  ansible.builtin.template:
     src: logrotate.d/owlp-nginx.j2
     dest: "/etc/logrotate.d/owlp-nginx"
-    mode: 0644
+    mode: "0644"

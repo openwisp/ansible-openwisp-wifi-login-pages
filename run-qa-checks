@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+yamllint .
+ansible-lint
+
+openwisp-qa-check \
+  --skip-isort \
+  --skip-flake8 \
+  --skip-checkmigrations \
+  --skip-black

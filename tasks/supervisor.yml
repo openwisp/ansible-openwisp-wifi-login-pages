@@ -1,6 +1,7 @@
 ---
-- name: supervisor configuration
-  template:
+- name: Supervisor configuration
+  ansible.builtin.template:
     src: supervisor.j2
     dest: "{{ supervisor_path | format('wifi_login_pages') }}"
-  notify: reload supervisor
+    mode: "0644"
+  notify: Reload supervisor

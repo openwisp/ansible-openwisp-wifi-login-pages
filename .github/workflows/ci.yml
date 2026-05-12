@@ -47,8 +47,7 @@ jobs:
         run: pip install "ansible-core<2.19"
 
       - name: QA checks
-        run: |
-          openwisp-qa-check --skip-isort --skip-flake8 --skip-checkmigrations --skip-black
+        run: ./run-qa-checks
 
       - name: Tests
         if: ${{ !cancelled() && steps.deps.conclusion == 'success' }}
