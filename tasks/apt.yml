@@ -1,6 +1,6 @@
 ---
 - name: Update APT package cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
   changed_when: false
   retries: 5
@@ -9,7 +9,7 @@
   until: result is success
 
 - name: Install system packages
-  apt:
+  ansible.builtin.apt:
     name:
       - gpg-agent
       - git
@@ -25,10 +25,11 @@
 - name: NodeJS deb source
   block:
     - name: Download nodesource gpg key
-      get_url:
+      ansible.builtin.get_url:
         url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
         dest: /etc/apt/trusted.gpg.d/nodesource.asc
         checksum: sha256:b42e0321dabdc24e892115da705cf061167eac12a317f23d329862d0aa0a271d
+        mode: "0644"
       ignore_errors: true
       retries: 5
       delay: 10
@@ -36,7 +37,7 @@
       until: result is success
 
     - name: Add nodejs 20.x ppa for apt repo
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodesource.asc] https://deb.nodesource.com/node_20.x nodistro main"
 
 - name: Yarn deb source
@@ -46,6 +47,7 @@
         url: https://dl.yarnpkg.com/debian/pubkey.gpg
         dest: /etc/apt/trusted.gpg.d/yarnpkg.asc
         checksum: sha256:f8f78154312934e7894e29da119c9fb06b489d36e0b36ec1538a5b8486a2f59e
+        mode: "0644"
       ignore_errors: true
       retries: 5
       delay: 10
@@ -53,11 +55,11 @@
       until: result is success
 
     - name: Add nodejs 20.x ppa for apt repo
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/yarnpkg.asc] https://dl.yarnpkg.com/debian/ stable main"
 
 - name: Install nodejs and yarn
-  apt:
+  ansible.builtin.apt:
     cache_valid_time: 3000
     name:
       - nodejs

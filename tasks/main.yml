@@ -1,12 +1,16 @@
 ---
-- import_tasks: apt.yml
+- name: Apt tasks
+  ansible.builtin.import_tasks: apt.yml
   tags: [wifi-login-pages, apt]
 
-- import_tasks: yarn.yml
+- name: Yarn tasks
+  ansible.builtin.import_tasks: yarn.yml
   tags: [wifi-login-pages, yarn]
 
-- import_tasks: supervisor.yml
+- name: Supervisor tasks
+  ansible.builtin.import_tasks: supervisor.yml
   tags: [wifi-login-pages, supervisor]
 
-- import_tasks: nginx.yml
+- name: Nginx tasks
+  ansible.builtin.import_tasks: nginx.yml
   tags: [wifi-login-pages, nginx]

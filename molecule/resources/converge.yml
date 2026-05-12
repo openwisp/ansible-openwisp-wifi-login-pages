@@ -5,8 +5,7 @@
 
   vars:
     wifi_login_pages_domains: ["localhost"]
-
   tasks:
     - name: "Include ansible role"
-      include_role:
+      ansible.builtin.include_role:
         name: "openwisp.wifi_login_pages"

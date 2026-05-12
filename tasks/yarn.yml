@@ -1,39 +1,42 @@
 ---
-- name: openwisp-wifi-login-pages.git
-  git:
-    repo: "{{ wifi_login_pages_repo_url}}"
+- name: Openwisp-wifi-login-pages.git
+  ansible.builtin.git:
+    repo: "{{ wifi_login_pages_repo_url }}"
     dest: "{{ wifi_login_pages_path }}"
     version: "{{ wifi_login_pages_version }}"
     force: true
   tags: git
 
-- name: yarn install
+- name: Yarn install
   community.general.yarn:
     path: "{{ wifi_login_pages_path }}"
 
-- name: create log directory
-  file:
+- name: Create log directory
+  ansible.builtin.file:
     dest: "{{ wifi_login_pages_path }}/log"
     group: "{{ www_group }}"
     owner: "{{ www_user }}"
     state: directory
+    mode: "0750"
 
-- name: create yarn cache directory
-  file:
+- name: Create yarn cache directory
+  ansible.builtin.file:
     dest: "/var/www/.cache/yarn"
     group: "{{ www_group }}"
     owner: "{{ www_user }}"
     state: directory
+    mode: "0750"
 
-- name: create npm directory
-  file:
+- name: Create npm directory
+  ansible.builtin.file:
     dest: "/var/www/.npm"
     group: "{{ www_group }}"
     owner: "{{ www_user }}"
     state: directory
+    mode: "0750"
 
-- name: set permissions
-  file:
+- name: Set permissions
+  ansible.builtin.file:
     dest: "{{ wifi_login_pages_path }}"
     group: "{{ www_group }}"
     owner: "{{ www_user }}"
@@ -41,43 +44,44 @@
     mode: u=rwX,g=rX,o=X
     recurse: true
 
-- name: copy organizations configs and assets
+- name: Copy organizations configs and assets
   become: true
-  copy:
+  ansible.builtin.copy:
     src: "{{ wifi_login_pages_organizations_src }}"
     dest: "{{ wifi_login_pages_path }}/organizations"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
-    mode: 0640
+    mode: "0640"
   failed_when: false
   tags: [assets]
 
-- name: copy translations (i18n directory)
+- name: Copy translations (i18n directory)
   become: true
-  copy:
+  ansible.builtin.copy:
     src: owlp_i18n/
     dest: "{{ wifi_login_pages_path }}/i18n"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
-    mode: 0640
+    mode: "0640"
   failed_when: false
   tags: [i18n]
 
-- name: copy static files
+- name: Copy static files
   become: true
-  copy:
+  ansible.builtin.copy:
     src: owlp_static/
     dest: "{{ wifi_login_pages_path }}/static"
     owner: "{{ www_user }}"
     group: "{{ www_group }}"
-    mode: 0640
+    mode: "0640"
   failed_when: false
   tags: [assets]
 
-- name: yarn build
+- name: Yarn build
   become: true
   become_user: "{{ www_user }}"
-  command: "yarn build"
+  ansible.builtin.command: "yarn build"
   args:
     chdir: "{{ wifi_login_pages_path }}"
+  changed_when: true
   tags: [yarn-build]

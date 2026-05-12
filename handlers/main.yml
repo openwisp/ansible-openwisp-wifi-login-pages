@@ -1,11 +1,11 @@
 ---
-- name: reload supervisor
-  service:
+- name: Reload supervisor
+  ansible.builtin.service:
     name: supervisor
     state: restarted
   become: true
 
-- name: restart nginx
-  service:
+- name: Restart nginx
+  ansible.builtin.service:
     name: nginx
     state: restarted
