@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 1.3.2 [2026-05-12]
+
+### Dependencies
+
+- Bumped `openwisp-utils~=1.2.2`
+- Update ansible-core requirement
+
+### Bugfixes
+
+- Updated nodesource and yarn gpg key checksums
+
 ## Version 1.3.1 [2025-12-22]
 
 - Default `wifi_login_pages_version` to stable 1.2 branch of openwisp-wifi-login-pages.
