@@ -1,3 +1,4 @@
+---
 name: Issue Assignment Bot
 on:
   issue_comment:
