@@ -1,3 +1,4 @@
+---
 name: PR Reopen Reassignment
 on:
   pull_request_target:
