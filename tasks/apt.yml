@@ -36,9 +36,14 @@
       register: result
       until: result is success
 
-    - name: Add nodejs 20.x ppa for apt repo
+    - name: Remove nodejs 20.x ppa for apt repo
       ansible.builtin.apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodesource.asc] https://deb.nodesource.com/node_20.x nodistro main"
+        state: absent
+
+    - name: Add nodejs 24.x ppa for apt repo
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodesource.asc] https://deb.nodesource.com/node_24.x nodistro main"
 
 - name: Yarn deb source
   block:

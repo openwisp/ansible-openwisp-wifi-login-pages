@@ -5,6 +5,28 @@
   become: true
 
   tasks:
+    - name: Get installed Node.js version
+      ansible.builtin.command: node --version
+      changed_when: false
+      register: nodejs_version
+
+    - name: Verify Node.js 24 is installed
+      ansible.builtin.assert:
+        that:
+          - nodejs_version.stdout is match('^v24\\.')
+
+    - name: Check Node.js 20 repository is removed
+      ansible.builtin.command: >-
+        grep -R --include='*.list' 'node_20.x' /etc/apt/sources.list.d
+      changed_when: false
+      failed_when: false
+      register: nodejs_20_repository
+
+    - name: Verify Node.js 20 repository is absent
+      ansible.builtin.assert:
+        that:
+          - nodejs_20_repository.rc == 1
+
     - name: Checking file is uploaded
       ansible.builtin.stat:
         path: "/opt/openwisp2/wifi-login-pages/organizations/default/testfile"
