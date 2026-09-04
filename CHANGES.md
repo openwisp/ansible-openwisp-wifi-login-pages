@@ -1,5 +1,17 @@
 # Changelog
 
+## Version 1.4.0 [2026-09-04]
+
+### Changes
+
+- Upgraded to WiFi Login Pages 1.3.x (see
+  [changelog](https://github.com/openwisp/openwisp-wifi-login-pages/releases/tag/1.3.0)).
+- Upgraded Node.js from `20.x` to `24.x`.
+
+### Dependencies
+
+- Updated `ansible-core` compatibility to [`>=2.15,<2.22`](https://github.com/ansible/ansible/releases/tag/v2.21.0).
+
 ## Version 1.3.2 [2026-05-12]
 
 ### Dependencies
