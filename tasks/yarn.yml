@@ -19,6 +19,15 @@
     state: directory
     mode: "0750"
 
+- name: Create custom files directory
+  ansible.builtin.file:
+    dest: "{{ wifi_login_pages_path }}/files"
+    group: "{{ www_group }}"
+    owner: "{{ www_user }}"
+    state: directory
+    mode: "0755"
+  tags: [robots]
+
 - name: Create yarn cache directory
   ansible.builtin.file:
     dest: "/var/www/.cache/yarn"
@@ -85,3 +94,13 @@
     chdir: "{{ wifi_login_pages_path }}"
   changed_when: true
   tags: [yarn-build]
+
+- name: Deploy robots.txt
+  ansible.builtin.template:
+    src: robots.txt.j2
+    dest: "{{ wifi_login_pages_path }}/files/robots.txt"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: "0644"
+  when: wifi_login_pages_robot_noindex
+  tags: [robots]

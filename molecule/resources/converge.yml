@@ -5,6 +5,7 @@
 
   vars:
     wifi_login_pages_domains: ["localhost"]
+    wifi_login_pages_robot_noindex: true
   tasks:
     - name: "Include ansible role"
       ansible.builtin.include_role:

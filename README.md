@@ -41,6 +41,12 @@ Below are listed all the variables you can customize
     # Local directory with organizations configuration and assets (uploaded if present)
     wifi_login_pages_organizations_src: "owlp_organizations/"
 
+    # Prevent search engines from crawling the login pages
+    wifi_login_pages_robot_noindex: false
+
+    # Files stored in <wifi_login_pages_path>/files are served from the site root
+    # (for example, files/robots.txt is available at /robots.txt)
+
     # Supervisor config destination pattern
     supervisor_path: "/etc/supervisor/conf.d/%s.conf"
 

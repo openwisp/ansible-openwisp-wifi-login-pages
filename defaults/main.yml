@@ -10,6 +10,7 @@ wifi_login_pages_nginx_csp: >
   "default-src 'self' http: https: data: blob: 'unsafe-inline';
   frame-ancestors 'self';" always;
 wifi_login_pages_organizations_src: "owlp_organizations/"
+wifi_login_pages_robot_noindex: false
 supervisor_path: "/etc/supervisor/conf.d/%s.conf"
 www_group: "www-data"
 www_user: "www-data"

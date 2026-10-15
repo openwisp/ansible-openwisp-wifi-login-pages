@@ -57,6 +57,19 @@
         msg: "The file is not uploaded."
       when: not translation_file.stat.exists
 
+    - name: Get robots.txt
+      ansible.builtin.uri:
+        url: "https://localhost/robots.txt"
+        return_content: true
+        validate_certs: false
+      register: robots_txt
+
+    - name: Verify robots.txt blocks crawlers
+      ansible.builtin.assert:
+        that:
+          - robots_txt.status == 200
+          - robots_txt.content | b64encode == 'VXNlci1hZ2VudDogKgpEaXNhbGxvdzogLwo='
+
     - name: Checking static file is copied
       ansible.builtin.stat:
         path: "/opt/openwisp2/wifi-login-pages/static/test_static_file"
