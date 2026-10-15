@@ -34,7 +34,13 @@ server {
     }
 
     location / {
-        try_files {{ wifi_login_pages_path }}/dist/maintenance.html $uri @nodejs;
+        root {{ wifi_login_pages_path }}/files;
+        try_files $uri @wifi_login_pages_dist;
+    }
+
+    location @wifi_login_pages_dist {
+        root {{ wifi_login_pages_path }}/dist;
+        try_files /maintenance.html $uri @nodejs;
     }
 
     location /static/ {
