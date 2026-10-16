@@ -23,7 +23,6 @@ jobs:
           - ubuntu2004
           - debian13
           - debian12
-          - debian11
 
     steps:
       - uses: actions/checkout@v7

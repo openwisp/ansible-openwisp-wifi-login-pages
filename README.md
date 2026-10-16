@@ -250,7 +250,6 @@ docker pull geerlingguy/docker-ubuntu2204-ansible:latest
 docker pull geerlingguy/docker-ubuntu2004-ansible:latest
 docker pull geerlingguy/docker-debian13-ansible:latest
 docker pull geerlingguy/docker-debian12-ansible:latest
-docker pull geerlingguy/docker-debian11-ansible:latest
 ```
 
 **Step 5**: Install ansible dependencies
