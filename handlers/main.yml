@@ -1,8 +1,16 @@
 ---
-- name: Reload supervisor
-  ansible.builtin.service:
-    name: supervisor
-    state: restarted
+- name: Update WiFi Login Pages configuration
+  ansible.builtin.command: supervisorctl update wifi_login_pages
+  register: supervisord_update_wifi_login_pages
+  changed_when: true
+  become: true
+
+- name: Restart WiFi Login Pages
+  ansible.builtin.command: supervisorctl restart wifi_login_pages
+  when: >-
+    not (supervisord_update_wifi_login_pages is defined and
+    "wifi_login_pages:" in supervisord_update_wifi_login_pages.stdout)
+  changed_when: true
   become: true
 
 - name: Restart nginx

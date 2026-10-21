@@ -93,6 +93,7 @@
   args:
     chdir: "{{ wifi_login_pages_path }}"
   changed_when: true
+  notify: Restart WiFi Login Pages
   tags: [yarn-build]
 
 - name: Deploy robots.txt

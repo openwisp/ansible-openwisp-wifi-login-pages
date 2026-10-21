@@ -3,5 +3,6 @@ molecule-plugins[docker]
 ansible-core>=2.21.4,<2.22
 yamllint
 ansible-lint
+supervisor>=4.2,<5
 docker
 openwisp-utils[qa]~=1.3.0
