@@ -60,6 +60,13 @@ startsecs=0
             [str(wrapper), *args], text=True, timeout=15
         ).strip()
 
+    def count_starts():
+        return (
+            len((temp / "starts").read_text().splitlines())
+            if (temp / "starts").exists()
+            else 0
+        )
+
     playbook = temp / "test.yml"
     playbook.write_text(
         f"""---
@@ -91,13 +98,26 @@ startsecs=0
       notify: Restart WiFi Login Pages
 """
     )
-    subprocess.run(
-        [str(env_bin / "supervisord"), "-c", str(config)], check=True, timeout=15
+    supervisor = subprocess.Popen(
+        [str(env_bin / "supervisord"), "-n", "-c", str(config)],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT,
     )
     results = []
     try:
-        unrelated_pid = ctl("pid", "unrelated")
-        assert int(unrelated_pid) > 0, "Unrelated process did not start"
+        for attempt in range(50):
+            if supervisor.poll() is not None:
+                raise RuntimeError("Supervisor exited during startup")
+            if (temp / "supervisor.sock").exists():
+                try:
+                    unrelated_pid = ctl("pid", "unrelated")
+                    if int(unrelated_pid) > 0:
+                        break
+                except (OSError, subprocess.SubprocessError):
+                    pass
+            time.sleep(0.1)
+        else:
+            raise TimeoutError("Unrelated process did not start")
         for label, revision, restart, expected_starts, expected_restarts in [
             ("first install", 1, True, 1, 0),
             ("application change", 1, True, 2, 1),
@@ -122,14 +142,13 @@ startsecs=0
             if output.returncode:
                 raise AssertionError(output.stdout + output.stderr)
             for attempt in range(30):
-                starts = (
-                    len((temp / "starts").read_text().splitlines())
-                    if (temp / "starts").exists()
-                    else 0
-                )
+                starts = count_starts()
                 if starts >= expected_starts:
                     break
                 time.sleep(0.1)
+            if not restart:
+                time.sleep(1)
+                starts = count_starts()
             assert starts == expected_starts, (
                 label,
                 starts,
@@ -158,4 +177,25 @@ startsecs=0
             )
         print(json.dumps(results, indent=2))
     finally:
-        ctl("shutdown")
+        test_failed = sys.exc_info()[0] is not None
+        cleanup_errors = []
+        try:
+            ctl("shutdown")
+        except Exception as error:
+            cleanup_errors.append(error)
+        try:
+            try:
+                supervisor.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                supervisor.terminate()
+                try:
+                    supervisor.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    supervisor.kill()
+                    supervisor.wait(timeout=5)
+        except Exception as error:
+            cleanup_errors.append(error)
+        for error in cleanup_errors:
+            print(f"Supervisor cleanup failed: {error}", file=sys.stderr)
+        if cleanup_errors and not test_failed:
+            raise cleanup_errors[0]
