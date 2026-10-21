@@ -55,9 +55,9 @@ startsecs=0
         ANSIBLE_NOCOLOR="1",
     )
 
-    def ctl(*args):
+    def ctl(*args, timeout=15):
         return subprocess.check_output(
-            [str(wrapper), *args], text=True, timeout=15
+            [str(wrapper), *args], text=True, timeout=timeout
         ).strip()
 
     def count_starts():
@@ -105,17 +105,20 @@ startsecs=0
     )
     results = []
     try:
-        for attempt in range(50):
+        startup_deadline = time.monotonic() + 5
+        while time.monotonic() < startup_deadline:
             if supervisor.poll() is not None:
                 raise RuntimeError("Supervisor exited during startup")
             if (temp / "supervisor.sock").exists():
                 try:
-                    unrelated_pid = ctl("pid", "unrelated")
+                    unrelated_pid = ctl(
+                        "pid", "unrelated", timeout=max(0, startup_deadline - time.monotonic())
+                    )
                     if int(unrelated_pid) > 0:
                         break
                 except (OSError, subprocess.SubprocessError):
                     pass
-            time.sleep(0.1)
+            time.sleep(min(0.1, max(0, startup_deadline - time.monotonic())))
         else:
             raise TimeoutError("Unrelated process did not start")
         for label, revision, restart, expected_starts, expected_restarts in [
