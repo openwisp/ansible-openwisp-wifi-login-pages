@@ -27,15 +27,16 @@
         that:
           - nodejs_20_repository.rc == 1
 
-    - name: Check NodeSource unattended upgrades configuration
-      ansible.builtin.slurp:
-        src: /etc/apt/apt.conf.d/52openwisp-wifi-login-pages-nodesource
-      register: nodesource_unattended_upgrades
+    - name: Get unattended upgrades origins configuration
+      ansible.builtin.command: >-
+        apt-config dump Unattended-Upgrade::Origins-Pattern
+      changed_when: false
+      register: unattended_upgrade_origins
 
     - name: Verify NodeSource unattended upgrades configuration
       ansible.builtin.assert:
         that:
-          - "'origin=. nodistro' in (nodesource_unattended_upgrades.content | b64decode)"
+          - "'site=deb.nodesource.com,suite=nodistro' in unattended_upgrade_origins.stdout"
 
     - name: Checking file is uploaded
       ansible.builtin.stat:
