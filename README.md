@@ -273,3 +273,7 @@ molecule test -s local
 If you don't get any error message it means that the tests ran successfully without errors.
 
 **ProTip:** Use `molecule test --destroy=never` to speed up subsequent test runs.
+
+## Unattended Node.js upgrades
+
+The role configures unattended upgrades to install updates from the NodeSource repository it adds. NodeSource does not publish a separate security repository, so this also permits regular Node.js updates from the configured Node 24 repository.

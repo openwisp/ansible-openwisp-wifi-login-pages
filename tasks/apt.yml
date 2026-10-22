@@ -45,6 +45,12 @@
       ansible.builtin.apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/nodesource.asc] https://deb.nodesource.com/node_24.x nodistro main"
 
+    - name: Allow unattended upgrades from NodeSource
+      ansible.builtin.template:
+        src: apt/unattended-upgrades-nodesource.j2
+        dest: /etc/apt/apt.conf.d/52openwisp-wifi-login-pages-nodesource
+        mode: "0644"
+
 - name: Yarn deb source
   block:
     - name: Download dl.yarnpkg.com gpg key
