@@ -1,6 +1,7 @@
+---
 name: GitHub Actions Security Analysis with zizmor
 
-on:
+on: # yamllint disable-line rule:truthy
   push:
     branches:
       - master
