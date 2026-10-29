@@ -12,6 +12,9 @@ jobs:
   publish:
     name: Publish the role on Ansible Galaxy
     runs-on: ubuntu-24.04
+    environment:
+      name: ansible-galaxy
+      deployment: false
     concurrency:
       group: galaxy-publish-${{ github.repository }}-${{ github.event.release.id }}
       cancel-in-progress: false
