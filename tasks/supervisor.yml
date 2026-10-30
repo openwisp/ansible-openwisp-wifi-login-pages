@@ -1,7 +1,12 @@
 ---
+- name: Ensure Supervisor is running
+  ansible.builtin.service:
+    name: supervisor
+    state: started
+
 - name: Supervisor configuration
   ansible.builtin.template:
     src: supervisor.j2
     dest: "{{ supervisor_path | format('wifi_login_pages') }}"
     mode: "0644"
-  notify: Reload supervisor
+  notify: Update WiFi Login Pages configuration
