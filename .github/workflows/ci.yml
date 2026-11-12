@@ -53,6 +53,9 @@ jobs:
         if: matrix.distro == 'ubuntu2004'
         run: pip install "ansible-core<2.19"
 
+      - name: Test Supervisor handlers
+        run: python tests/test_supervisor.py
+
       - name: QA checks
         continue-on-error: true
         run: ./run-qa-checks

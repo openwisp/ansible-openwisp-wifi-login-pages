@@ -220,6 +220,17 @@ the playbook.
 
 ## How to run tests
 
+The Supervisor handler tests can run locally without Docker. They start an
+isolated Supervisor instance with dummy processes and check that updates restart
+only the login pages process:
+
+```shell
+pip install 'ansible-core>=2.21.4,<2.22' 'supervisor>=4.2,<5'
+python tests/test_supervisor.py
+```
+
+These checks do not replace the full deployment tests below.
+
 If you want to contribute to `ansible-openwisp-wifi-login-pages` you should run tests
 in your development environment to ensure your changes are not breaking anything.
 
