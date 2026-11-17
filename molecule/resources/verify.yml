@@ -84,3 +84,13 @@
       ansible.builtin.fail:
         msg: "The file is not uploaded."
       when: not static_file.stat.exists
+
+    - name: Get wifi_login_pages supervisor status
+      ansible.builtin.command: supervisorctl status wifi_login_pages
+      changed_when: false
+      register: wifi_login_pages_status
+
+    - name: Verify wifi_login_pages is running
+      ansible.builtin.assert:
+        that:
+          - "'RUNNING' in wifi_login_pages_status.stdout"
