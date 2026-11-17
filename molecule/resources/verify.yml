@@ -89,6 +89,9 @@
       ansible.builtin.command: supervisorctl status wifi_login_pages
       changed_when: false
       register: wifi_login_pages_status
+      until: "'RUNNING' in wifi_login_pages_status.stdout"
+      retries: 10
+      delay: 3
 
     - name: Verify wifi_login_pages is running
       ansible.builtin.assert:
