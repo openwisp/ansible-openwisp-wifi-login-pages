@@ -84,3 +84,81 @@
       ansible.builtin.fail:
         msg: "The file is not uploaded."
       when: not static_file.stat.exists
+
+    - name: Get wifi_login_pages supervisor status
+      ansible.builtin.command: supervisorctl status wifi_login_pages
+      changed_when: false
+      register: wifi_login_pages_status
+      until: "'RUNNING' in wifi_login_pages_status.stdout"
+      retries: 10
+      delay: 3
+
+    - name: Verify wifi_login_pages is running
+      ansible.builtin.assert:
+        that:
+          - "'RUNNING' in wifi_login_pages_status.stdout"
+
+    # A config change to wifi_login_pages must restart only that program:
+    # an unrelated program and supervisord itself must keep their PIDs.
+    - name: Add an unrelated supervisor program
+      ansible.builtin.copy:
+        dest: /etc/supervisor/conf.d/molecule_sentinel.conf
+        mode: "0644"
+        content: |
+          [program:molecule_sentinel]
+          command=/bin/sleep infinity
+          autostart=true
+
+    - name: Start the unrelated supervisor program
+      ansible.builtin.command: supervisorctl update molecule_sentinel
+      changed_when: true
+
+    - name: Get PIDs before the targeted update
+      ansible.builtin.command: "{{ item }}"
+      changed_when: false
+      register: pids_before
+      until: pids_before.stdout | int > 0
+      retries: 10
+      delay: 3
+      loop:
+        - supervisorctl pid
+        - supervisorctl pid molecule_sentinel
+        - supervisorctl pid wifi_login_pages
+
+    - name: Change wifi_login_pages configuration
+      ansible.builtin.lineinfile:
+        path: /etc/supervisor/conf.d/wifi_login_pages.conf
+        regexp: "^environment="
+        line: environment=NODE_ENV=production,MOLECULE_MARKER=updated
+
+    # same command the role's handler runs
+    - name: Apply the targeted update
+      ansible.builtin.command: supervisorctl update wifi_login_pages
+      changed_when: true
+
+    - name: Get PIDs after the targeted update
+      ansible.builtin.command: "{{ item }}"
+      changed_when: false
+      register: pids_after
+      until: pids_after.stdout | int > 0
+      retries: 10
+      delay: 3
+      loop:
+        - supervisorctl pid
+        - supervisorctl pid molecule_sentinel
+        - supervisorctl pid wifi_login_pages
+
+    - name: Read wifi_login_pages environment
+      ansible.builtin.command: >-
+        grep -c MOLECULE_MARKER=updated
+        /proc/{{ pids_after.results[2].stdout }}/environ
+      changed_when: false
+      register: wifi_login_pages_environ
+
+    - name: Verify only wifi_login_pages was restarted with new config
+      ansible.builtin.assert:
+        that:
+          - pids_after.results[0].stdout == pids_before.results[0].stdout
+          - pids_after.results[1].stdout == pids_before.results[1].stdout
+          - pids_after.results[2].stdout != pids_before.results[2].stdout
+          - wifi_login_pages_environ.stdout | int > 0

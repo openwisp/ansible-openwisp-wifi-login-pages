@@ -1,8 +1,14 @@
 ---
-- name: Reload supervisor
-  ansible.builtin.service:
-    name: supervisor
-    state: restarted
+# "update" reloads only this program's configuration and restarts it
+# only if its configuration changed, other supervisor programs are untouched
+- name: Update wifi_login_pages supervisor program
+  ansible.builtin.command: supervisorctl update wifi_login_pages
+  register: supervisorctl_update
+  # supervisord may still be creating its socket right after being started
+  until: supervisorctl_update.rc == 0
+  retries: 5
+  delay: 2
+  changed_when: true
   become: true
 
 - name: Restart nginx

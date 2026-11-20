@@ -4,4 +4,12 @@
     src: supervisor.j2
     dest: "{{ supervisor_path | format('wifi_login_pages') }}"
     mode: "0644"
-  notify: Reload supervisor
+  notify: Update wifi_login_pages supervisor program
+
+# runs after the template so an invalid existing config
+# is replaced before supervisord tries to load it
+- name: Ensure supervisor is running
+  ansible.builtin.service:
+    name: supervisor
+    state: started
+    enabled: true
